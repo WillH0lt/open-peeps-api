@@ -10,18 +10,13 @@ const HEAD_SLUGS: Record<number, string> = {
 	[Head.HEAD_BANGS_TWO]: "bangs-two",
 	[Head.HEAD_BANTU_KNOTS]: "bantu-knots",
 	[Head.HEAD_BEANIE]: "beanie",
-	[Head.HEAD_BEAR]: "bear",
 	[Head.HEAD_BUN]: "bun",
 	[Head.HEAD_BUN_CLIP]: "bun-clip",
 	[Head.HEAD_BUN_KNOTS]: "bun-knots",
 	[Head.HEAD_BUN_TWO]: "bun-two",
 	[Head.HEAD_COLOR_BUN]: "color-bun",
 	[Head.HEAD_COLOR_MEDIUM]: "color-medium",
-	[Head.HEAD_CORNROWS]: "cornrows",
 	[Head.HEAD_CORNROWS_LIGHT]: "cornrows-light",
-	[Head.HEAD_DOC_ONE]: "doc-one",
-	[Head.HEAD_DOC_THREE]: "doc-three",
-	[Head.HEAD_DOC_TWO]: "doc-two",
 	[Head.HEAD_DREADS_ONE]: "dreads-one",
 	[Head.HEAD_DREADS_TWO]: "dreads-two",
 	[Head.HEAD_FLAT_TOP]: "flat-top",
@@ -198,7 +193,6 @@ export function decodeToken(token: string): { parts: AvatarParts; colors: ColorO
 	if (config.jacketColor) colors.jacketColor = config.jacketColor;
 	if (config.hairColor) colors.hairColor = config.hairColor;
 	if (config.hatColor) colors.hatColor = config.hatColor;
-	if (config.beardColor) colors.beardColor = config.beardColor;
 	if (config.accessoryColor) colors.accessoryColor = config.accessoryColor;
 	if (config.propColor) colors.propColor = config.propColor;
 	if (config.backgroundColor) colors.backgroundColor = config.backgroundColor;

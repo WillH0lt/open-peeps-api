@@ -97,9 +97,8 @@ See [`utils/generate-url.ts`](utils/generate-url.ts) for a complete working exam
 | `outlineColor` | `#000` | Line art |
 | `topColor` | `#FFCF77` | Shirt/clothing |
 | `jacketColor` | `#BA98DE` | Jacket, blazer, coat |
-| `hairColor` | `#E5E5E5` | Colored hair variants |
+| `hairColor` | `#E5E5E5` | Hair color (select styles) |
 | `hatColor` | `#C93305` | Beanie, cap, hijab, turban |
-| `beardColor` | `brown` | Colored beard variants |
 | `accessoryColor` | `#C93305` | Glasses frames, hair clips |
 | `propColor` | `silver` | Held objects (cup, laptop, paper) |
 | `backgroundColor` | `transparent` | Background fill |

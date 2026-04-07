@@ -1,4 +1,4 @@
-import { compositeAvatar } from "./composite";
+import { compositeAvatar, renderPart } from "./composite";
 import { decodeToken } from "./token";
 
 interface Env {
@@ -25,6 +25,12 @@ export default {
 			return jsonResponse({ error: "Method not allowed" }, 405, corsHeaders);
 		}
 
+		// Route: GET /v1/parts/:category/:slug.svg (individual part)
+		const partMatch = path.match(/^\/v1\/parts\/(head|face|body|facial-hair|accessories)\/([a-z0-9-]+)\.svg$/);
+		if (partMatch) {
+			return handlePartSvg(partMatch[1], partMatch[2], url.searchParams, corsHeaders);
+		}
+
 		// Route: GET /v1/:token.svg (protobuf-encoded avatar config)
 		const tokenMatch = path.match(/^\/v1\/(.+)\.svg$/);
 		if (tokenMatch) {
@@ -35,8 +41,11 @@ export default {
 			return jsonResponse(
 				{
 					name: "open-peeps-api",
-					version: "1.0.0",
-					endpoint: "/v1/:token.svg",
+					version: "1.1.0",
+					endpoints: {
+						avatar: "/v1/:token.svg",
+						part: "/v1/parts/:category/:slug.svg?skinColor=...&outlineColor=...",
+					},
 					proto: "See proto/avatar.proto for the schema",
 				},
 				200,
@@ -47,6 +56,33 @@ export default {
 		return jsonResponse({ error: "Not found" }, 404, corsHeaders);
 	},
 };
+
+function handlePartSvg(
+	category: string,
+	slug: string,
+	params: URLSearchParams,
+	corsHeaders: Record<string, string>,
+): Response {
+	const colors: Record<string, string> = {};
+	for (const [key, value] of params) {
+		colors[key] = value;
+	}
+
+	const svg = renderPart(category, slug, colors);
+	if (!svg) {
+		return jsonResponse({ error: "Part not found" }, 404, corsHeaders);
+	}
+
+	return new Response(svg, {
+		status: 200,
+		headers: {
+			"Content-Type": "image/svg+xml",
+			"Cache-Control": "public, max-age=31536000, immutable",
+			"Cache-Tag": "part-svg",
+			...corsHeaders,
+		},
+	});
+}
 
 function handleSvgToken(token: string, corsHeaders: Record<string, string>): Response {
 	const result = decodeToken(token);

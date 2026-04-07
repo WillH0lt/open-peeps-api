@@ -16,7 +16,7 @@ message AvatarConfig {
   optional string jacket_color = 13;
   optional string hair_color = 14;
   optional string hat_color = 15;
-  optional string beard_color = 16;
+  reserved 16; // was beard_color, now consolidated into hair_color
   optional string accessory_color = 17;
   optional string prop_color = 18;
   optional string background_color = 19;
@@ -30,18 +30,16 @@ enum Head {
   HEAD_BANGS_TWO = 4;
   HEAD_BANTU_KNOTS = 5;
   HEAD_BEANIE = 6;
-  HEAD_BEAR = 7;
+  reserved 7; // was HEAD_BEAR
   HEAD_BUN = 8;
   HEAD_BUN_CLIP = 9;
   HEAD_BUN_KNOTS = 10;
   HEAD_BUN_TWO = 11;
   HEAD_COLOR_BUN = 12;
   HEAD_COLOR_MEDIUM = 13;
-  HEAD_CORNROWS = 14;
+  reserved 14; // was HEAD_CORNROWS
   HEAD_CORNROWS_LIGHT = 15;
-  HEAD_DOC_ONE = 16;
-  HEAD_DOC_THREE = 17;
-  HEAD_DOC_TWO = 18;
+  reserved 16, 17, 18; // was HEAD_DOC_ONE, HEAD_DOC_THREE, HEAD_DOC_TWO
   HEAD_DREADS_ONE = 19;
   HEAD_DREADS_TWO = 20;
   HEAD_FLAT_TOP = 21;

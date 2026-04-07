@@ -30,12 +30,16 @@ function findPart(category: Category, slug: string): PartData | undefined {
 	return PARTS[category].find((p) => p.slug === slug);
 }
 
+function resolveColor(apiParam: string, colors: ColorOverrides): string {
+	if (colors[apiParam]) return colors[apiParam];
+	return DEFAULT_COLORS[apiParam] ?? "#000";
+}
+
 function renderPaths(part: PartData, colors: ColorOverrides): string {
 	return part.paths
 		.map((p) => {
-			// Map React prop name → simplified API param name → user value or default
 			const apiParam = COLOR_PROP_MAP[p.colorProp] ?? p.colorProp;
-			const color = colors[apiParam] ?? DEFAULT_COLORS[apiParam] ?? "#000";
+			const color = resolveColor(apiParam, colors);
 			return `<path d="${p.d}" fill="${color}" />`;
 		})
 		.join("\n      ");
@@ -69,6 +73,14 @@ function getAccessoryTransform(accessorySlug: string): string {
 	return `translate(${ACCESSORY_BASE.x + offset.x}, ${ACCESSORY_BASE.y + offset.y})`;
 }
 
+export function renderPart(category: string, slug: string, colors: ColorOverrides): string | null {
+	const part = findPart(category as Category, slug);
+	if (!part) return null;
+
+	const paths = renderPaths(part, colors);
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${part.viewBox}" width="${part.width}" height="${part.height}">\n  ${paths}\n</svg>`;
+}
+
 export function compositeAvatar(parts: AvatarParts, colors: ColorOverrides): string {
 	const bodyPart = findPart("body", parts.body)!;
 	const headPart = findPart("head", parts.head)!;
@@ -86,7 +98,8 @@ export function compositeAvatar(parts: AvatarParts, colors: ColorOverrides): str
 		: `translate(${ACCESSORY_BASE.x}, ${ACCESSORY_BASE.y})`;
 
 	const bg = colors.backgroundColor ?? DEFAULT_COLORS.backgroundColor;
-	const bgRect = bg !== "transparent" ? `\n    <rect width="100%" height="100%" fill="${bg}" />` : "";
+	const bgRect =
+		bg !== "transparent" ? `\n    <rect x="-9999" y="-9999" width="99999" height="99999" fill="${bg}" />` : "";
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${AVATAR_VIEWBOX}" width="${AVATAR_WIDTH}" height="${AVATAR_HEIGHT}">${bgRect}
   <g id="bust">
