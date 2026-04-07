@@ -9,7 +9,7 @@ describe("root", () => {
 		expect(res.status).toBe(200);
 		const json = await res.json();
 		expect(json.name).toBe("open-peeps-api");
-		expect(json.endpoint).toBe("/v1/:token.svg");
+		expect(json.endpoints.avatar).toBe("/v1/:token.svg");
 	});
 });
 
