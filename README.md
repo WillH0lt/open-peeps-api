@@ -134,10 +134,6 @@ npm run deploy             # Deploy to Cloudflare Workers
 npm test                   # Run tests
 ```
 
-### Source data
-
-The SVG path data in `src/manifest.ts` was extracted from the [Open Peeps React library](https://github.com/CakirEmre/open-peeps). The protobuf types in `src/proto/avatar.ts` were generated from `proto/avatar.proto` using [ts-proto](https://github.com/stephenh/ts-proto). Both are pre-generated and committed — no extra tools needed to build or deploy.
-
 ### Testing locally
 
 ```bash
@@ -163,24 +159,6 @@ After deploying, your avatars are available at:
 
 ```
 https://open-peeps-api.<your-subdomain>.workers.dev/v1/<token>.svg
-```
-
-## Project Structure
-
-```
-proto/avatar.proto           ← protobuf schema (source of truth for types)
-src/
-  index.ts                   ← Worker entry: routing + CORS
-  composite.ts               ← SVG compositing engine
-  token.ts                   ← protobuf decode + enum-to-slug mapping
-  transforms.ts              ← position offsets, colors, defaults
-  manifest.ts                ← [pre-generated] SVG path data from React components
-  proto/avatar.ts            ← [pre-generated] protobuf types + serializer
-test/
-  routes.test.ts             ← API route tests
-  token.test.ts              ← protobuf token + SVG output tests
-utils/
-  generate-url.ts            ← build a config and print the avatar URL
 ```
 
 ## License
