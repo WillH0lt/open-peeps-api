@@ -8,6 +8,10 @@ A Cloudflare Worker that generates customizable [Open Peeps](https://www.openpee
 https://your-worker.dev/v1/CAEQChgG.svg
 ```
 
+## Builder
+
+The [`builder/`](builder/) directory contains a Vue app for visually building avatars — pick parts, tweak colors, and grab the SVG or shareable link. See [builder/README.md](builder/README.md) for setup instructions.
+
 ## Quick Start
 
 ```bash
